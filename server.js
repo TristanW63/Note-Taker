@@ -1,21 +1,20 @@
 const express = require('express');
-// const htmlRoute = require('./routes/htmlRoute');
-// const apiRoute = require('./routes/apiRoutes');
+const api = require('./routes/api');
+const html = require('./routes/html')
 
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 
+
+// Middleware for parsing JSON
 app.use(express.json());
-app.use(express.urlencoded({ extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
-// app.use('/api', apiRoute);
-// create route for html route
-// app.use('/', htmlRoute);
+app.use('/api', api);
+app.use('/', html);
 
-app.use(require('./routes/apiRoutes'));
-
-   
-app.listen(PORT, () =>
-console.log(`App listening at  http://localhost:${PORT} 🚀`)
-);
+// Listening notification within console
+app.listen(PORT, () => {
+    console.log(`App listening at http//localhost:${PORT}`)
+});
